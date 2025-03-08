@@ -5,6 +5,7 @@ import itertools
 import os
 
 class RttiTransformer(ast.NodeTransformer):
+    _output_filename_suffix = "PyQt5ToCpp"
     _scope_node_types = (ast.If, ast.For, ast.While, ast.With, ast.FunctionDef, ast.ClassDef, ast.Module)
     _anon_scope_node_types = (ast.If, ast.For, ast.While, ast.With)
     
@@ -113,12 +114,14 @@ class RttiTransformer(ast.NodeTransformer):
         
         for target in node.targets:
             scoped_names.append(self.scoped_name(target))
-                   
+            
+        scoped_names = [ast.Constant(value=s, kind=None) for s in scoped_names]
+        
         wrapped_value = ast.Call(
                 func=ast.Name(id='record_rtti', ctx=ast.Load()),
                 args=[
                     node.value,
-                    ast.List(elts=[ast.Constant(value=s, kind=None) for s in scoped_names],
+                    ast.List(elts=scoped_names,
                              ctx=ast.Load())               
                 ],
                 keywords=[]
@@ -127,10 +130,8 @@ class RttiTransformer(ast.NodeTransformer):
         new_node = ast.Assign(targets=node.targets, value=wrapped_value)
         return  new_node #ast.copy_location(new_node, node)
     
-    def output_app_entry_filename(self):
-        entry_module_name = self._entryModuleName
-        entry_module_name,_ = os.path.splitext(entry_module_name)
-        return f'{entry_module_name}_PyQt5ToCpp'
+    def app_entry_filename(self):
+        return self._entryModuleName
 
 
 def record_rtti(values, scoped_names):
