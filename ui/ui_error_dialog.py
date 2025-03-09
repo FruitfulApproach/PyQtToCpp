@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_ErrorDialog(object):
     def setupUi(self, ErrorDialog):
         ErrorDialog.setObjectName("ErrorDialog")
-        ErrorDialog.resize(519, 316)
+        ErrorDialog.resize(409, 119)
         self.gridLayout = QtWidgets.QGridLayout(ErrorDialog)
         self.gridLayout.setObjectName("gridLayout")
         self.gitHubButton = QtWidgets.QPushButton(parent=ErrorDialog)
