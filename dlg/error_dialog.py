@@ -4,6 +4,8 @@ from PyQt6.QtGui import QDesktopServices, QGuiApplication
 from PyQt6.QtCore import QUrl
 
 class ErrorDialog(QDialog, Ui_ErrorDialog):
+    _githubIssuesForumUrl =  'https://github.com/FruitfulApproach/PyQtToCpp/issues'
+    
     def __init__(self, parent=None):
         super().__init__(parent)
         super().__init__()
@@ -13,7 +15,7 @@ class ErrorDialog(QDialog, Ui_ErrorDialog):
     
     def goto_github_issues_forum(self):
         # TODO
-        QDesktopServices.openUrl(QUrl("www.gooogle.com"))
+        QDesktopServices.openUrl(QUrl(self._githubIssuesForumUrl))
         
     def copy_error_text_to_clipboard(self):
         clipboard = QGuiApplication.clipboard()

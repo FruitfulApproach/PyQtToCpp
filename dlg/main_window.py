@@ -3,12 +3,12 @@ from PyQt6.QtWidgets import QMainWindow, QFileDialog
 import _pickle as pickle
 import os
 from dlg.error_dialog import ErrorDialog
-import sys
+from PyQt6.QtGui import QIcon
 import traceback
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     _appTitle = "PyQtToCpp"
-    _appExt = "py-to-c++"
+    _appExt = "pyqt-c++"
     _lastSessionPtr = 'last-session.pickle'
     
     def __init__(self, parent=None, pickled=False):
@@ -18,7 +18,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self._saveFilename = None
         self._saved = False
         self._appEntrypoint = None
-        #self._
+        self._runtimeCheckFolder = None
+        
+        # TODO: figure out how to do this in Resource file in PyQt6 (?)
+        self.setWindowIcon(QIcon("img/Python_and_Qt.svg"))
         
         self.setWindowTitle(self._appTitle)
         
@@ -28,11 +31,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __setstate__(self, data):
         self.__init__(pickled=True)
         self.set_app_entrypoint(data['app entrypoint'])
+        self.set_runtime_check_folder(data['runtime check folder'])
+        self.setWindowTitle(self._appTitle)
         self.finish_setup()
         
     def __getstate__(self):
         return {
             'app entrypoint' : self.app_entrypoint(),
+            'runtime check folder' : self.runtime_check_folder(),
         }
     
     def set_app_entrypoint(self, entrypoint):
@@ -43,6 +49,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             
     def app_entrypoint(self):
         return self._appEntrypoint
+    
+    def set_runtime_check_folder(self, folder):
+        if self._runtimeCheckFolder != folder:
+            self._runtimeCheckFolder = folder
+            self.runtimeTypingFolderLine.setText(folder)
+            self.app_changes_made()
+            
+    def runtime_check_folder(self):
+        return self._runtimeCheckFolder
             
     def app_changes_made(self):
         self.setWindowTitle(f'{self._appTitle}*')
@@ -52,6 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionSave_as.triggered.connect(self.save_as)
         self.pythonAppEntrypointLine.textChanged.connect(self.set_app_entrypoint)
         self.chooseAppEntryButton.clicked.connect(self.display_app_entrypoint_dialog)
+        self.chooseRuntimeTypingButton.clicked.connect(self.display_runtime_check_folder_dialog)
         
     def app_entrypoint_changed(self, entrypoint):
         if entrypoint != self._appEntrypoint:
@@ -74,8 +90,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             
             self.setWindowTitle(self._appTitle)
             
-        except Exception as e:
-            self.display_error_message(str(e))
+        except:
+            self.display_error_message(MainWindow, MainWindow.save, None, traceback.format_exc(), parent=self)
             
     def save_as(self):
         try:           
@@ -90,15 +106,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 filter=f"{self._appTitle} (*.{self._appExt});; All files (*.*)")
             
             self.save()
-        except Exception as e:
-            self.display_app_entrypoint_dialog(str(e))
+        except:
+            self.display_app_entrypoint_dialog(MainWindow, MainWindow.save_as, None, traceback.format_exc(), parent=self)
         
     @staticmethod
-    def display_error_message(cls, method, traceback, parent, *args):
+    def display_error_message(cls, method, args, traceback, parent=None):
         # TODO: switch to exception-based with function / class name, line number /module
         # as well as traceback info
+        if not args:
+            args = "()"
+            
         msg = f"""ERROR in {cls.__name__}.{method.__name__}{args}:
--------------------------------------
+---
 {traceback}
         """
         
@@ -121,29 +140,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if os.path.exists(app_entrypoint):
                 self.set_app_entrypoint(app_entrypoint)                                
             
-        except Exception as e:
-            self.display_error_message(str(e))
+        except:
+            self.display_error_message(MainWindow, MainWindow.display_app_entrypoint_dialog, None, traceback.format_exc(), parent=self)
+    
+    def display_runtime_check_folder_dialog(self):
+        try:
+            if self._runtimeCheckFolder is None:
+                rt_check_folder_dir = '.'
+            else:
+                rt_check_folder_dir = os.path.dirname(self._runtimeCheckFolder)
+                
+            rt_check_folder = QFileDialog.getExistingDirectory(
+                parent=self, caption="Choose Runtime Type Check Folder",
+                directory=rt_check_folder_dir, options=QFileDialog.Option.ShowDirsOnly)
+            
+            if os.path.exists(rt_check_folder):
+                self.set_runtime_check_folder(rt_check_folder)
+            
+        except:            
+            self.display_error_message(MainWindow, MainWindow.display_runtime_check_folder_dialog, None, traceback.format_exc(), parent=self)
             
     @staticmethod
     def load_last_session():
         try:
             if os.path.exists(MainWindow._lastSessionPtr):
                 with open(MainWindow._lastSessionPtr, 'rb') as last_session_ptr:
-                    last_project_file = pickle.load(last_session_ptr)
+                    last_project_filename = pickle.load(last_session_ptr)
                     
-                with open(last_project_file, 'rb') as last_project_file:
+                with open(last_project_filename, 'rb') as last_project_file:
                     window = pickle.load(last_project_file)
+                    window._saveFilename = last_project_filename
                 
                 return window
             
-        except Exception as e:
-            MainWindow.display_error_message(MainWindow, MainWindow.save, traceback.format_exc(), None)
+        except:
+            MainWindow.display_error_message(MainWindow, MainWindow.save, None, traceback.format_exc())
             
     def save_last_session(self):
         try:
             if self._saveFilename is not None:
                 with open(MainWindow._lastSessionPtr, 'wb') as last_session_ptr:
-                    pickle.dump(last_session_ptr, self._saveFilename)
-        except Exception as e:
-            MainWindow.display_error_message(MainWindow, MainWindow.save, traceback.format_exc())
+                    pickle.dump(self._saveFilename, last_session_ptr)
+        except:
+            MainWindow.display_error_message(MainWindow, MainWindow.save, None, traceback.format_exc())
         
