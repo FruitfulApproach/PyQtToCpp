@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread
+from PyQt6.QtCore import QThread
 from rtti import Rtti
 import ast
 import os

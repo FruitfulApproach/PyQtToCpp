@@ -17,10 +17,13 @@ proj.launch-config = {loc('example1.py'): ('project',
                       loc('example2.py'): ('project',
         ('',
          'launch-8CBqACP6z2yRuzEt')),
+                      loc('main.py'): ('project',
+                                       ('',
+        'launch-8CBqACP6z2yRuzEt')),
                       loc('rtti_transform.py'): ('project',
         ('',
          'launch-8CBqACP6z2yRuzEt')),
                       loc('rtti_transformer.py'): ('project',
         ('',
          'launch-8CBqACP6z2yRuzEt'))}
-proj.main-file = loc('rtti_transformer.py')
+proj.main-file = loc('main.py')

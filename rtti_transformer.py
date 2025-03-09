@@ -5,7 +5,7 @@ import itertools
 import os
 
 class RttiTransformer(ast.NodeTransformer):
-    _output_filename_suffix = "PyQt5ToCpp"
+    _output_filename_suffix = "PyQt6ToCpp"
     _scope_node_types = (ast.If, ast.For, ast.While, ast.With, ast.FunctionDef, ast.ClassDef, ast.Module)
     _anon_scope_node_types = (ast.If, ast.For, ast.While, ast.With)
     

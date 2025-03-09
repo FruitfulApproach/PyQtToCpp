@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>410</height>
+    <width>590</width>
+    <height>354</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,13 +25,6 @@
         <string>Configuration</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="2" column="4" colspan="2">
-         <widget class="QPushButton" name="chooseCppOutputButton">
-          <property name="text">
-           <string>Choose Folder...</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
@@ -43,13 +36,6 @@
          <widget class="QLabel" name="label_4">
           <property name="text">
            <string>Open Python Code with:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="4" colspan="2">
-         <widget class="QPushButton" name="chooseAppEntryButton">
-          <property name="text">
-           <string>Choose File...</string>
           </property>
          </widget>
         </item>
@@ -76,53 +62,11 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1" colspan="3">
-         <widget class="QLineEdit" name="cppCodeOutputFolderLine"/>
-        </item>
-        <item row="1" column="1" colspan="3">
-         <widget class="QLineEdit" name="runtimeTypingFolderLine"/>
-        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>Runtime Typing Folder:</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="3">
-         <widget class="QLineEdit" name="pythonAppEntrypointLine"/>
-        </item>
-        <item row="1" column="4" colspan="2">
-         <widget class="QPushButton" name="chooseRuntimeTypingButton">
-          <property name="text">
-           <string>Choose Folder...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QGroupBox" name="cppStandardLibraryGroup">
-          <property name="title">
-           <string>C++ Standard Library</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QRadioButton" name="qtStandardLibRadio">
-             <property name="text">
-              <string>Qt</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QRadioButton" name="stlStandardLibRadio">
-             <property name="text">
-              <string>STL</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
         <item row="7" column="0">
@@ -147,6 +91,96 @@
           </item>
          </widget>
         </item>
+        <item row="0" column="5">
+         <widget class="QPushButton" name="chooseAppEntryButton">
+          <property name="text">
+           <string>Choose File...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="QPushButton" name="chooseRuntimeTypingButton">
+          <property name="text">
+           <string>Choose Folder...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QPushButton" name="chooseCppOutputButton">
+          <property name="text">
+           <string>Choose Folder...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" colspan="4">
+         <widget class="QLineEdit" name="cppCodeOutputFolderLine">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" colspan="4">
+         <widget class="QLineEdit" name="runtimeTypingFolderLine">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" colspan="4">
+         <widget class="QLineEdit" name="pythonAppEntrypointLine">
+          <property name="font">
+           <font>
+            <bold>true</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QGroupBox" name="cppStandardLibraryGroup">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>C++ Std Library (Future)</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="qtStandardLibRadio">
+             <property name="text">
+              <string>Qt</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QRadioButton" name="stlStandardLibRadio">
+             <property name="text">
+              <string>STL</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="8" column="1" colspan="5">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
@@ -154,6 +188,26 @@
         <string>Runtime Type Check</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="1" column="1">
+         <widget class="QPushButton" name="resetTypeCheckButton">
+          <property name="text">
+           <string>Reset Type Check</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item row="0" column="0" colspan="3">
          <widget class="QTableWidget" name="runtimeTypeCheckTable">
           <property name="enabled">
@@ -196,28 +250,21 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="startTypeCheckButton">
           <property name="text">
            <string>Start Type Check</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="text">
-           <string>Reset Type Check</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <spacer name="horizontalSpacer_2">
+        <item row="2" column="0" colspan="3">
+         <spacer name="verticalSpacer_3">
           <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
+           <enum>Qt::Orientation::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>40</width>
-            <height>20</height>
+            <width>20</width>
+            <height>40</height>
            </size>
           </property>
          </spacer>
@@ -229,26 +276,6 @@
         <string>C++ Code Generation</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
-        <item row="2" column="0">
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>Generate C++ Code</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Orientation::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
         <item row="1" column="0" colspan="2">
          <widget class="QTableWidget" name="tableWidget">
           <property name="sortingEnabled">
@@ -274,6 +301,39 @@
           </column>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="generateCppCodeButton">
+          <property name="text">
+           <string>Generate C++ Code</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -285,7 +345,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>681</width>
+     <width>590</width>
      <height>22</height>
     </rect>
    </property>
@@ -294,17 +354,20 @@
      <string>Project</string>
     </property>
     <addaction name="actionNewProject"/>
+    <addaction name="separator"/>
     <addaction name="actionSaveProject"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
     <addaction name="actionExitProject"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout"/>
-    <addaction name="actionGitHub_Issues_Forum"/>
     <addaction name="actionLicense"/>
+    <addaction name="actionGitHub_Issues_Forum"/>
     <addaction name="actionCheck_for_Updates"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuProject"/>
    <addaction name="menuHelp"/>
@@ -343,6 +406,11 @@
   <action name="actionCheck_for_Updates">
    <property name="text">
     <string>Check for Updates</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Save as</string>
    </property>
   </action>
  </widget>
